@@ -34,11 +34,6 @@ class Board
   private
 
   def populate
-    # @grid[0..1].each do |row|
-    #   row.each_index do |idx|
-    #     row[idx] = Piece.new
-    #   end
-    # end
     @grid[0] = [
       Rook.new([0,0], :black, self),
       Knight.new([0,1], :black, self),
@@ -50,18 +45,8 @@ class Board
       Rook.new([0,7], :black, self)
     ]
 
-    @grid[1] = Array.new(8) {|i| Pawn.new([1,i], :black, self)}
-    # [
-    #   Pawn.new([1,0], :black, self),
-    #   Pawn.new([1,1], :black, self),
-    #   Pawn.new([1,2], :black, self),
-    #   Pawn.new([1,3], :black, self),
-    #   Pawn.new([1,4], :black, self),
-    #   Pawn.new([1,5], :black, self),
-    #   Pawn.new([1,6], :black, self),
-    #   Pawn.new([1,7], :black, self),
-    # ]
-
+    # @grid[1] = Array.new(8) { |i| Pawn.new([1,i], :black, self) }
+    @grid[1] = Array.new(8) { NullPiece.new }
 
     @grid[2..5].each do |row|
       row.each_index do |idx|
@@ -70,17 +55,6 @@ class Board
     end
 
     @grid[6] = Array.new(8) {|i| Pawn.new([6,i], :white, self)}
-
-    # [
-    #   Pawn.new([1,0], :white, self),
-    #   Pawn.new([1,1], :white, self),
-    #   Pawn.new([1,2], :white, self),
-    #   Pawn.new([1,3], :white, self),
-    #   Pawn.new([1,4], :white, self),
-    #   Pawn.new([1,5], :white, self),
-    #   Pawn.new([1,6], :white, self),
-    #   Pawn.new([1,7], :white, self),
-    # ]
 
     @grid[7] = [
       Rook.new([7,0], :white, self),
@@ -92,13 +66,6 @@ class Board
       Knight.new([7,6], :white, self),
       Rook.new([7,7], :white, self)
     ]
-    # @grid[6..7].each do |row|
-    #   row.each_index do |idx|
-    #     row[idx] = Piece.new
-    #   end
-    # end
-
-
   end
 
 end

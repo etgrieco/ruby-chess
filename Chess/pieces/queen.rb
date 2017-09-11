@@ -1,6 +1,10 @@
-class Queen < Piece
-  include SlidingPiece
+require_relative 'piece'
 
-  def initialize
+class Queen < Piece
+  # include SlidingPiece
+
+  def to_s
+    'Q'.colorize(self.color)
   end
+
 end

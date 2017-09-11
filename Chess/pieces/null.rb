@@ -1,8 +1,12 @@
 class NullPiece < Piece
 
-  def to_s
-    "n"
+  def initialize
   end
+
+  def to_s
+    "□"
+  end
+
   def inspect
     "n"
   end
