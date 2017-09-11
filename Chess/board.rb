@@ -12,14 +12,10 @@ class Board
 
   def move_piece(start_pos, end_pos)
     piece = self[start_pos]
-    raise StandardError.new("There is no piece there") if piece.class == NullPiece
-    self[start_pos] = NullPiece
+    raise MoveError.new("There is no piece there") if piece.class == NullPiece
+    self[start_pos] = NullPiece.new
     self[end_pos] = piece
-
   end
-
-
-
 
   def [](pos)
     row, col = pos
@@ -52,5 +48,13 @@ class Board
       end
     end
   end
+
+end
+
+class BoardErrors < StandardError
+
+end
+
+class MoveError < BoardErrors
 
 end
