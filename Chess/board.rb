@@ -17,6 +17,10 @@ class Board
     self[end_pos] = piece
   end
 
+  def self.in_bounds?(pos)
+    pos.none? {|coordinate| coordinate < 0 || coordinate > 7}
+  end
+
   def [](pos)
     row, col = pos
     @grid[row][col]
