@@ -13,11 +13,12 @@ class Display
 
   def get_input
     cursor = Cursor.new(@current_pos, @board)
-    until cursor.selected
+    until cursor.selected?
       render
       @current_pos = cursor.get_input
       system 'clear'
     end
+    p @current_pos
     @current_pos
   end
 

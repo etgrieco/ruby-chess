@@ -33,7 +33,6 @@ MOVES = {
 class Cursor
 
   attr_reader :cursor_pos, :board
-  attr_accessor :selected
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
@@ -44,6 +43,10 @@ class Cursor
   def get_input
     key = KEYMAP[read_char]
     handle_key(key)
+  end
+
+  def selected?
+    @selected
   end
 
   private
