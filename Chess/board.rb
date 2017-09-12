@@ -13,7 +13,7 @@ class Board
   def move_piece(start_pos, end_pos)
     piece = self[start_pos]
     raise MoveError.new("There is no piece there") if piece.class == NullPiece
-    self[start_pos] = NullPiece.new
+    self[start_pos] = NullPiece.instance
     self[end_pos] = piece
   end
 
@@ -46,11 +46,11 @@ class Board
     ]
 
     @grid[1] = Array.new(8) { |i| Pawn.new([1,i], :black, self) }
-    # @grid[1] = Array.new(8) { NullPiece.new } # remove pawns for testing
+    # @grid[1] = Array.new(8) { NullPiece.instance } # remove pawns for testing
 
     @grid[2..5].each do |row|
       row.each_index do |idx|
-        row[idx] = NullPiece.new()
+        row[idx] = NullPiece.instance
       end
     end
 
@@ -76,4 +76,8 @@ end
 
 class MoveError < BoardErrors
 
+end
+
+if __FILE__ == $PROGRAM_NAME
+a = Board.new
 end
