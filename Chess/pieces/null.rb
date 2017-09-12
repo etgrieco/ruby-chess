@@ -7,6 +7,10 @@ class NullPiece < Piece
   def initialize
   end
 
+  def duplicate
+    self.class.instance
+  end
+
   def to_s
     "□"
   end

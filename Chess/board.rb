@@ -4,9 +4,9 @@ class Board
 
   attr_accessor :grid
 
-  def initialize
-    @grid = Array.new(8) {Array.new(8)}
-    populate
+  def initialize(grid = nil)
+    grid ||= Board.new_game_grid
+    @grid = grid
   end
 
   def move_piece(start_pos, end_pos) # add valid_moves and raise errors
@@ -27,18 +27,9 @@ class Board
   end
 
   def checkmate?(color)
-    return false in_check?(color)
-
-    # find which of king's moves are in check => check_moves
-    # then go through each check_moves and see if any piece can go there
-      # if a piece can go there, then make sure that THAT move doesn't keep the king in check
-        # (possible without dups?)
-      # if that's the case, then delete from check_moves
-
-    king = self[king_pos(color)]
-    # king.moves.each do |move|
+    in_check?(color) &&
+      all_pieces(color).all? { |piece| piece.valid_moves.empty? }
   end
-
 
   def in_check?(color)
     other_color = ([:black, :white] - [color]).first
@@ -49,8 +40,6 @@ class Board
 
     false
   end
-
-
 
   def all_pieces(color)
     @grid.flatten.select {|piece| piece.color == color}
@@ -66,10 +55,9 @@ class Board
     @grid[row][col] = piece
   end
 
-  private
-
-  def populate
-    @grid[0] = [
+  def self.new_game_grid
+    new_grid = Array.new(8) { Array.new(8) }
+    new_grid[0] = [
       Rook.new([0,0], :black, self),
       Knight.new([0,1], :black, self),
       Bishop.new([0,2], :black, self),
@@ -80,18 +68,18 @@ class Board
       Rook.new([0,7], :black, self)
     ]
 
-    @grid[1] = Array.new(8) { |i| Pawn.new([1,i], :black, self) }
-    # @grid[1] = Array.new(8) { NullPiece.instance } # remove pawns for testing
+    new_grid[1] = Array.new(8) { |i| Pawn.new([1,i], :black, self) }
+    # new_grid[1] = Array.new(8) { NullPiece.instance } # remove pawns for testing
 
-    @grid[2..5].each do |row|
+    new_grid[2..5].each do |row|
       row.each_index do |idx|
         row[idx] = NullPiece.instance
       end
     end
 
-    @grid[6] = Array.new(8) {|i| Pawn.new([6,i], :white, self)}
+    new_grid[6] = Array.new(8) {|i| Pawn.new([6,i], :white, self)}
 
-    @grid[7] = [
+    new_grid[7] = [
       Rook.new([7,0], :white, self),
       Knight.new([7,1], :white, self),
       Bishop.new([7,2], :white, self),
@@ -101,6 +89,23 @@ class Board
       Knight.new([7,6], :white, self),
       Rook.new([7,7], :white, self)
     ]
+
+    new_grid
+  end
+
+  def dup
+    new_grid = Array.new(8) { Array.new }
+    @grid.each.with_index do |row, row_idx|
+      row.each.with_index do |piece, col_idx|
+        new_grid[row_idx] << piece.duplicate
+      end
+    end
+
+    new_board = Board.new(new_grid)
+
+    new_board.grid.flatten.each { |piece| piece.board = new_board }
+
+    new_board
   end
 
 end
