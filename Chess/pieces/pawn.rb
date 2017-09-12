@@ -15,19 +15,11 @@ class Pawn < Piece
       if at_start_row?
         vertical_move = @position[0] + (forward_steps * forward_dir[0])
         start_move = vertical_move, @position[1]
-        possible_moves << start_move
+        possible_moves << start_move if @board[start_move].is_a?(NullPiece)
       end
     end
 
-    side_attacks.each do |diff|
-      side_attack = [diff[0] + @position[0], diff[1] + @position[1]]
-      next if !Board.in_bounds?(side_attack) ||
-        @board[side_attack].is_a?(NullPiece) ||
-        @board[side_attack].color == self.color
-      possible_moves << side_attack
-    end
-
-    possible_moves
+    possible_moves + attacks
   end
 
   def at_start_row?
@@ -60,6 +52,19 @@ class Pawn < Piece
     when :white
       [[-1,-1], [-1,1]]
     end
+  end
+
+  def attacks
+    possible_attacks = []
+    side_attacks.each do |diff|
+      side_attack = [diff[0] + @position[0], diff[1] + @position[1]]
+      next if !Board.in_bounds?(side_attack) ||
+        @board[side_attack].is_a?(NullPiece) ||
+        @board[side_attack].color == self.color
+      possible_attacks << side_attack
+    end
+
+    possible_attacks
   end
 
 end

@@ -5,7 +5,7 @@ class Board
   attr_accessor :grid
 
   def initialize(grid = nil)
-    grid ||= Board.new_game_grid
+    grid = grid || new_game_grid
     @grid = grid
   end
 
@@ -55,7 +55,7 @@ class Board
     @grid[row][col] = piece
   end
 
-  def self.new_game_grid
+  def new_game_grid
     new_grid = Array.new(8) { Array.new(8) }
     new_grid[0] = [
       Rook.new([0,0], :black, self),

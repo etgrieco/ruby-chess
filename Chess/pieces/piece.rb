@@ -23,8 +23,9 @@ class Piece
   end
 
   def duplicate
-    self.class.new(@position, @color, @board = nil)
+    self.class.new(@position, @color, nil)
   end
+
 
   def to_s
     "p"
