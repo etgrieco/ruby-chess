@@ -5,6 +5,10 @@ require_relative '../board'
 class King < Piece
   include SteppingPiece
 
+  def inspect
+    '♚'
+  end
+
   def to_s
     '♔'.colorize(self.color)
   end

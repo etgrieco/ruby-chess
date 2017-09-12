@@ -5,6 +5,10 @@ require_relative '../board'
 class Bishop < Piece
   include SlidingPiece
 
+  def inspect
+    '♝'
+  end
+
   def to_s
     'B'.colorize(self.color)
   end

@@ -5,6 +5,10 @@ require_relative '../board'
 class Knight < Piece
   include SteppingPiece
 
+  def inspect
+    '♞'
+  end
+
   def to_s
     'K'.colorize(self.color)
   end

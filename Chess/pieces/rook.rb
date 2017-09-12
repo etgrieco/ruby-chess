@@ -5,6 +5,10 @@ require_relative '../board'
 class Rook < Piece
   include SlidingPiece
 
+  def inspect
+    '♜'
+  end
+
   def to_s
     'R'.colorize(self.color)
   end

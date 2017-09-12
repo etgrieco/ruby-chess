@@ -2,6 +2,10 @@ require_relative 'piece'
 
 class Pawn < Piece
 
+  def inspect
+    '♟'
+  end
+
   def to_s
     'P'.colorize(self.color)
   end

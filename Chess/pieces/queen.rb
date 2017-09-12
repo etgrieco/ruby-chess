@@ -6,7 +6,11 @@ class Queen < Piece
   include SlidingPiece
 
   def to_s
-    'Q'.colorize(self.color)
+    '♛'.colorize(self.color)
+  end
+
+  def inspect
+    '♛'
   end
 
   def move_dirs
