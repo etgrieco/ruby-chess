@@ -23,7 +23,10 @@ class Display
   end
 
   def render
+    count = 0
+
     @board.grid.each.with_index do |row, row_idx|
+      print " "
       row.each.with_index do |piece, col_idx|
         if [row_idx, col_idx] == @current_pos
           print piece.to_s.colorize(:red)

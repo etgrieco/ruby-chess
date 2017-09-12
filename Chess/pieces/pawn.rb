@@ -22,6 +22,8 @@ class Pawn < Piece
     possible_moves + attacks
   end
 
+  private
+
   def at_start_row?
     if @color == :white && @position[0] == 6
       true

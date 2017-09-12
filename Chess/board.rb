@@ -28,11 +28,6 @@ class Board
     pos.none? {|coordinate| coordinate < 0 || coordinate > 7}
   end
 
-  def king_pos(color)
-    @grid.flatten.select {|piece| piece.is_a?(King) && piece.color == color}
-    .first.position
-  end
-
   def checkmate?(color)
     in_check?(color) &&
       all_pieces(color).all? { |piece| piece.valid_moves.empty? }
@@ -48,10 +43,6 @@ class Board
     false
   end
 
-  def all_pieces(color)
-    @grid.flatten.select {|piece| piece.color == color}
-  end
-
   def [](pos)
     row, col = pos
     @grid[row][col]
@@ -61,6 +52,23 @@ class Board
     row,col = pos
     @grid[row][col] = piece
   end
+
+  def dup
+    new_grid = Array.new(8) { Array.new }
+    @grid.each.with_index do |row, row_idx|
+      row.each.with_index do |piece, col_idx|
+        new_grid[row_idx] << piece.duplicate
+      end
+    end
+
+    new_board = Board.new(new_grid)
+
+    new_board.grid.flatten.each { |piece| piece.board = new_board }
+
+    new_board
+  end
+
+  private
 
   def new_game_grid
     new_grid = Array.new(8) { Array.new(8) }
@@ -100,19 +108,13 @@ class Board
     new_grid
   end
 
-  def dup
-    new_grid = Array.new(8) { Array.new }
-    @grid.each.with_index do |row, row_idx|
-      row.each.with_index do |piece, col_idx|
-        new_grid[row_idx] << piece.duplicate
-      end
-    end
+  def king_pos(color)
+    @grid.flatten.select {|piece| piece.is_a?(King) && piece.color == color}
+    .first.position
+  end
 
-    new_board = Board.new(new_grid)
-
-    new_board.grid.flatten.each { |piece| piece.board = new_board }
-
-    new_board
+  def all_pieces(color)
+    @grid.flatten.select {|piece| piece.color == color}
   end
 
 end
@@ -123,8 +125,4 @@ end
 
 class MoveError < BoardErrors
 
-end
-
-if __FILE__ == $PROGRAM_NAME
-a = Board.new
 end

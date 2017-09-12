@@ -17,6 +17,8 @@ class Game
     end
   end
 
+  private
+
   def over?
     @board.checkmate?(@current_player.color)
   end
