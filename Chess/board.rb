@@ -46,7 +46,7 @@ class Board
     ]
 
     @grid[1] = Array.new(8) { |i| Pawn.new([1,i], :black, self) }
-    # @grid[1] = Array.new(8) { NullPiece.new }
+    # @grid[1] = Array.new(8) { NullPiece.new } # remove pawns for testing
 
     @grid[2..5].each do |row|
       row.each_index do |idx|
