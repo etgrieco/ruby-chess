@@ -1,6 +1,5 @@
 require_relative 'pieces'
 
-
 class Board
 
   attr_accessor :grid
@@ -10,15 +9,51 @@ class Board
     populate
   end
 
-  def move_piece(start_pos, end_pos)
+  def move_piece(start_pos, end_pos) # add valid_moves and raise errors
     piece = self[start_pos]
     raise MoveError.new("There is no piece there") if piece.class == NullPiece
     self[start_pos] = NullPiece.instance
     self[end_pos] = piece
+    piece.change_position(end_pos)
   end
 
   def self.in_bounds?(pos)
     pos.none? {|coordinate| coordinate < 0 || coordinate > 7}
+  end
+
+  def king_pos(color)
+    @grid.flatten.select {|piece| piece.is_a?(King) && piece.color == color}
+    .first.position
+  end
+
+  def checkmate?(color)
+    return false in_check?(color)
+
+    # find which of king's moves are in check => check_moves
+    # then go through each check_moves and see if any piece can go there
+      # if a piece can go there, then make sure that THAT move doesn't keep the king in check
+        # (possible without dups?)
+      # if that's the case, then delete from check_moves
+
+    king = self[king_pos(color)]
+    # king.moves.each do |move|
+  end
+
+
+  def in_check?(color)
+    other_color = ([:black, :white] - [color]).first
+    other_pieces = all_pieces(other_color)
+    other_pieces.each do |piece|
+      return true if piece.moves.include?( king_pos(color) )
+    end
+
+    false
+  end
+
+
+
+  def all_pieces(color)
+    @grid.flatten.select {|piece| piece.color == color}
   end
 
   def [](pos)

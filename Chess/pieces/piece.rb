@@ -7,6 +7,10 @@ class Piece
     @board = board
   end
 
+  def change_position(pos)
+    @position = pos
+  end
+
   def to_s
     "p"
   end
