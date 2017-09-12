@@ -9,10 +9,6 @@ class Knight < Piece
     '♞'
   end
 
-  def to_s
-    'K'.colorize(self.color)
-  end
-
   def move_diffs
     [[-1, -2], [-1, 2], [1, -2], [1, 2],
       [-2, -1], [2, -1], [-2, 1], [2, 1]]

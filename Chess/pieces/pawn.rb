@@ -6,10 +6,6 @@ class Pawn < Piece
     '♟'
   end
 
-  def to_s
-    'P'.colorize(self.color)
-  end
-
   def moves
     possible_moves = []
     forward_move = forward_dir[0] + @position[0], forward_dir[1] + @position[1]

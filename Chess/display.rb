@@ -6,9 +6,10 @@ class Display
 
   attr_accessor :current_pos
 
-  def initialize(board)
+  def initialize(board, current_pos = [4,4], selected_pos = nil)
     @board = board
-    @current_pos = [0, 0]
+    @current_pos = current_pos
+    @selected_pos = selected_pos
   end
 
   def get_input
@@ -18,7 +19,6 @@ class Display
       @current_pos = cursor.get_input
       system 'clear'
     end
-    p @current_pos
     @current_pos
   end
 
@@ -27,6 +27,8 @@ class Display
       row.each.with_index do |piece, col_idx|
         if [row_idx, col_idx] == @current_pos
           print piece.to_s.colorize(:red)
+        elsif [row_idx, col_idx]  == @selected_pos
+          print piece.to_s.colorize(:blue)
         else
           print piece
         end
@@ -38,7 +40,3 @@ class Display
 
 
 end
-
-a = Board.new
-b = Display.new(a)
-pos = b.get_input

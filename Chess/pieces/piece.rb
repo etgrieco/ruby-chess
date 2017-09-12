@@ -2,6 +2,16 @@ class Piece
   attr_reader :color, :position
   attr_accessor :board
 
+  SYMBOLS = {
+    :King => '♚',
+    :Queen => '♛',
+    :Rook => '♜',
+    :Bishop => '♝',
+    :Knight => '♞',
+    :Pawn => '♟',
+    :NullPiece => '□'
+  }
+
   def initialize(position, color, board)
     @position = position
     @color = color
@@ -18,7 +28,7 @@ class Piece
 
   def move_into_check?(end_pos)
     check_board = @board.dup
-    check_board.move_piece(@position, end_pos)
+    check_board.move_piece!(@position, end_pos)
     check_board.in_check?(@color)
   end
 
@@ -28,7 +38,7 @@ class Piece
 
 
   def to_s
-    "p"
+    SYMBOLS[self.class.name.to_sym].colorize(self.color)
   end
 
   def inspect

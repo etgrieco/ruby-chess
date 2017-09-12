@@ -5,10 +5,6 @@ require_relative '../board'
 class Queen < Piece
   include SlidingPiece
 
-  def to_s
-    '♛'.colorize(self.color)
-  end
-
   def inspect
     '♛'
   end

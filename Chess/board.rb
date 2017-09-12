@@ -9,7 +9,14 @@ class Board
     @grid = grid
   end
 
-  def move_piece(start_pos, end_pos) # add valid_moves and raise errors
+  def move_piece(start_pos, end_pos)
+    piece = self[start_pos]
+    raise MoveError.new("That's not a valid chess move") unless piece.moves.include?(end_pos)
+    raise MoveError.new("You can't move a piece into check") if piece.move_into_check?(end_pos)
+    move_piece!(start_pos, end_pos)
+  end
+
+  def move_piece!(start_pos, end_pos) # add valid_moves and raise errors
     piece = self[start_pos]
     raise MoveError.new("There is no piece there") if piece.class == NullPiece
     self[start_pos] = NullPiece.instance

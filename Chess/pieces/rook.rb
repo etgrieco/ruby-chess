@@ -9,10 +9,6 @@ class Rook < Piece
     '♜'
   end
 
-  def to_s
-    'R'.colorize(self.color)
-  end
-
   def move_dirs
     vertical_dirs
   end

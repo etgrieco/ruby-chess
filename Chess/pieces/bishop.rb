@@ -9,10 +9,6 @@ class Bishop < Piece
     '♝'
   end
 
-  def to_s
-    'B'.colorize(self.color)
-  end
-
   def move_dirs
     diagnal_dirs
   end
