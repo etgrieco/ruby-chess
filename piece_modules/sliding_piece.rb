@@ -17,7 +17,7 @@ module SlidingPiece
     [[-1, -1], [1, 1], [-1, 1], [1, -1]]
   end
 
-  def vertical_dirs
+  def lateral_dirs
     [[-1, 0], [1, 0], [0, 1], [0, -1]]
   end
 
