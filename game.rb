@@ -17,6 +17,8 @@ class Game
       @current_player.play_turn(@board)
       switch_player
     end
+    switch_player
+    puts "Game over! #{@current_player.name} has checkmate!"
   end
 
   private
@@ -33,7 +35,7 @@ class Game
 end
 
 if __FILE__ == $PROGRAM_NAME
-  player1 = HumanPlayer.new("Player 1", :black)
-  player2 = HumanPlayer.new("Player 2", :white)
+  player1 = HumanPlayer.new("Player 1", :white)
+  player2 = HumanPlayer.new("Player 2", :black)
   Game.new(player1, player2).play
 end

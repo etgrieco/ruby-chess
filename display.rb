@@ -23,19 +23,24 @@ class Display
   def pos_highlight(pos)
     case pos
     when current_pos
-      :red
+      return :light_red
     when selected_pos
-      :blue
+      return :light_blue
+    end
+
+    if pos[0].even?
+      pos[1].odd? ? :yellow : :white
+    else
+      pos[1].even? ? :yellow : :white
     end
   end
 
   def print_board
     board.grid.each.with_index do |row, row_idx|
-      print " "
       row.each.with_index do |piece, col_idx|
         highlight_color = pos_highlight([row_idx, col_idx])
-        print piece.to_s.colorize(highlight_color)
-        print " "
+
+        print " #{piece} ".colorize(background: highlight_color)
       end
       puts ""
     end
