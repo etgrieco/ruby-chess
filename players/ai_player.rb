@@ -3,6 +3,15 @@ require_relative 'player'
 
 class AIPlayer < Player
 
+  PIECE_VALUES = {
+    King: 900,
+    Queen: 90,
+    Rook: 50,
+    Bishop: 30,
+    Knight: 30,
+    Pawn: 10,
+  }.freeze
+
   def play_turn(board)
     random_move = all_moves(board).sample
     board.move_piece(*random_move)

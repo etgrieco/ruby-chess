@@ -3,19 +3,19 @@ class Piece
   attr_accessor :board
 
   SYMBOLS = {
-    :King => '♚',
-    :Queen => '♛',
-    :Rook => '♜',
-    :Bishop => '♝',
-    :Knight => '♞',
-    :Pawn => '♟',
-    :NullPiece => ' '
-  }
+    King: '♚',
+    Queen: '♛',
+    Rook: '♜',
+    Bishop: '♝',
+    Knight: '♞',
+    Pawn: '♟',
+    NullPiece: ' '
+  }.freeze
 
   COLORS = {
     white: :light_white,
     black: :black
-  }
+  }.freeze
 
   def initialize(position, color, board)
     @position, @color, @board = position, color, board
