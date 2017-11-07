@@ -1,10 +1,9 @@
-class HumanPlayer
+require_relative 'player'
 
-  attr_reader :name, :color
+class HumanPlayer < Player
 
   def initialize(name, color)
-    @name = name
-    @color = color
+    super
     @messages = Hash.new
   end
 

@@ -74,6 +74,10 @@ class Board
     self[pos].color
   end
 
+  def all_pieces(color)
+    @grid.flatten.select { |piece| piece.color == color }
+  end
+
   private
 
   def populate_home_rows!(grid, color)
@@ -107,10 +111,6 @@ class Board
   def king_pos(color)
     king = all_pieces(color).find { |piece| piece.is_a?(King) }
     king.position
-  end
-
-  def all_pieces(color)
-    @grid.flatten.select { |piece| piece.color == color }
   end
 
 end
