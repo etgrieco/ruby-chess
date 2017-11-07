@@ -113,10 +113,5 @@ class Board
 
 end
 
-class BoardErrors < StandardError
-
-end
-
-class MoveError < BoardErrors
-
-end
+class BoardErrors < StandardError; end
+class MoveError < BoardErrors; end
