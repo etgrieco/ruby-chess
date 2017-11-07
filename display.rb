@@ -4,40 +4,52 @@ require_relative 'cursor'
 
 class Display
 
-  attr_accessor :current_pos
-
-  def initialize(board, current_pos = [4, 4], selected_pos = nil)
+  def initialize(board, current_pos, selected_pos, messages = Hash.new)
     @board = board
-    @current_pos = current_pos
-    @selected_pos = selected_pos
+    @current_pos, @selected_pos = current_pos, selected_pos
+    @messages = messages
   end
 
   def get_input
-    cursor = Cursor.new(@current_pos, @board)
+    cursor = Cursor.new(current_pos, board)
     until cursor.selected?
       render
-      @current_pos = cursor.get_input
+      self.current_pos = cursor.get_input
       system 'clear'
     end
-    @current_pos
+    current_pos
   end
 
-  def render
-    @board.grid.each.with_index do |row, row_idx|
+  def pos_highlight(pos)
+    case pos
+    when current_pos
+      :red
+    when selected_pos
+      :blue
+    end
+  end
+
+  def print_board
+    board.grid.each.with_index do |row, row_idx|
       print " "
       row.each.with_index do |piece, col_idx|
-        if @current_pos == [row_idx, col_idx]
-          print piece.to_s.colorize(:red)
-        elsif @selected_pos == [row_idx, col_idx]
-          print piece.to_s.colorize(:blue)
-        else
-          print piece
-        end
+        highlight_color = pos_highlight([row_idx, col_idx])
+        print piece.to_s.colorize(highlight_color)
         print " "
       end
       puts ""
     end
   end
 
+  def render
+    puts messages[:start]
+    print_board
+    puts messages[:errors]
+  end
 
+  private
+
+  attr_accessor :current_pos
+  attr_reader :board, :selected_pos
+  attr_reader :messages
 end
