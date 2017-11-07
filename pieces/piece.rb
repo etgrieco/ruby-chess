@@ -30,7 +30,7 @@ class Piece
   end
 
   def valid_pos?(pos)
-    Board.in_bounds?(pos) && board.piece_color != color
+    Board.in_bounds?(pos) && board.piece_color(pos) != color
   end
 
   def move_into_check?(end_pos)

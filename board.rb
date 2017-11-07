@@ -45,8 +45,12 @@ class Board
     false
   end
 
+  def is_empty?(pos)
+    self[pos].is_a?(NullPiece)
+  end
+
   def is_occupied?(pos)
-    !self[pos].is_a?(NullPiece)
+    !is_empty?(pos)
   end
 
   def [](pos)

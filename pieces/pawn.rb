@@ -1,31 +1,30 @@
+require 'set'
 require_relative 'piece'
 
 class Pawn < Piece
+  include SlidingPiece # for increment_pos method
 
   def inspect
     '♟'
   end
 
   def moves
-    possible_moves = []
-    forward_move = forward_dir.map { |dir, idx| dir + self.position[idx] }
-
-    if @board[forward_move].is_a?(NullPiece) && Board.in_bounds?(forward_move)
-      possible_moves << forward_move
+    moves = Set.new
+    move = increment_pos(position, diff)
+    if board.valid_pos?(move)
+      moves << move
       if at_start_row?
-        vertical_move = @position[0] + (forward_steps * forward_dir[0])
-        start_move = vertical_move, @position[1]
-        possible_moves << start_move if @board[start_move].is_a?(NullPiece)
+        move = increment_pos(move, diff)
+        moves << start_move if board.is_empty?(move)
       end
     end
-
-    possible_moves + attacks
+    moves + attacks
   end
 
   private
 
-  def forward_dir
-    case @color
+  def diff
+    case color
     when :black
       [1, 0]
     when :white
@@ -41,11 +40,7 @@ class Pawn < Piece
     end
   end
 
-  def forward_steps
-    at_start_row? ? 2 : 1
-  end
-
-  def side_attacks
+  def attack_diffs
     case @color
     when :black
       [[1, -1], [1, 1]]
@@ -55,16 +50,14 @@ class Pawn < Piece
   end
 
   def attacks
-    possible_attacks = []
-    side_attacks.each do |diff|
-      side_attack = [diff[0] + @position[0], diff[1] + @position[1]]
-      next if !Board.in_bounds?(side_attack) ||
-        @board[side_attack].is_a?(NullPiece) ||
-        @board[side_attack].color == self.color
-      possible_attacks << side_attack
+    attacks = Set.new
+    attack_diffs.each do |diff|
+      attack = increment_pos(position, diff)
+      if valid_pos?(attack) && board.is_occupied?(attack)
+        attacks << attack
+      end
     end
-
-    possible_attacks
+    attacks
   end
 
 end
