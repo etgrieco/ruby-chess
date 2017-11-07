@@ -2,18 +2,15 @@ require_relative 'pieces'
 
 class Board
 
-  attr_accessor :grid
-
   def initialize(grid = nil)
-    grid = grid || new_game_grid
-    @grid = grid
+    @grid = grid || new_game_grid
   end
 
   def move_piece(start_pos, end_pos)
     piece = self[start_pos]
     raise MoveError.new("There is no piece there") if piece.class == NullPiece
     raise MoveError.new("That's not a valid chess move") if piece.invalid_move?(end_pos)
-    raise MoveError.new("You can't move a piece into check") if piece.move_into_check?(end_pos)
+    raise MoveError.new("You can't place your own king into check") if piece.move_into_check?(end_pos)
     move_piece!(start_pos, end_pos)
   end
 
@@ -21,7 +18,7 @@ class Board
     piece = self[start_pos]
     self[start_pos] = NullPiece.instance
     self[end_pos] = piece
-    piece.change_position(end_pos)
+    piece.change_position!(end_pos)
   end
 
   def self.in_bounds?(pos)
@@ -33,16 +30,12 @@ class Board
       all_pieces(color).all? { |piece| piece.valid_moves.empty? }
   end
 
-  def other_color(color)
-    color == :black ? :white : :black
-  end
+  def in_check?(player_color)
+    king_pos = king_pos(player_color)
+    opponent_color = player_color == :black ? :white : :black
+    other_pieces = all_pieces(opponent_color)
 
-  def in_check?(color)
-    other_pieces = all_pieces(other_color(color))
-    other_pieces.each do |piece|
-      return true if piece.moves.include?(king_pos(color))
-    end
-    false
+    other_pieces.any? { |piece| piece.moves.include?(king_pos) }
   end
 
   def is_empty?(pos)
@@ -81,44 +74,37 @@ class Board
 
   private
 
+  attr_reader :grid
+
+  def populate_home_rows!(grid, color)
+    row = color == :black ? 0 : 7
+    pawn_row = color == :black ? 1 : 6
+
+    grid[row] = [
+      Rook.new([row, 0], color, self),
+      Knight.new([row, 1], color, self),
+      Bishop.new([row, 2], color, self),
+      Queen.new([row, 3], color, self),
+      King.new([row, 4], color, self),
+      Bishop.new([row, 5], color, self),
+      Knight.new([row, 6], color, self),
+      Rook.new([row, 7], color, self)
+    ]
+
+    grid[pawn_row] = Array.new(8) { |i| Pawn.new([6, i], :white, self) }
+  end
+
   def new_game_grid
     new_grid = Array.new(8) { Array.new(8) }
-    new_grid[0] = [
-      Rook.new([0, 0], :black, self),
-      Knight.new([0, 1], :black, self),
-      Bishop.new([0, 2], :black, self),
-      Queen.new([0, 3], :black, self),
-      King.new([0, 4], :black, self),
-      Bishop.new([0, 5], :black, self),
-      Knight.new([0, 6], :black, self),
-      Rook.new([0, 7], :black, self)
-    ]
-    new_grid[1] = Array.new(8) { |i| Pawn.new([1, i], :black, self) }
-
-    new_grid[2..5].each do |row|
-      row.each_index do |idx|
-        row[idx] = NullPiece.instance
-      end
-    end
-
-    new_grid[7] = [
-      Rook.new([7, 0], :white, self),
-      Knight.new([7, 1], :white, self),
-      Bishop.new([7, 2], :white, self),
-      Queen.new([7, 3], :white, self),
-      King.new([7, 4], :white, self),
-      Bishop.new([7, 5], :white, self),
-      Knight.new([7, 6], :white, self),
-      Rook.new([7, 7], :white, self)
-    ]
-    new_grid[6] = Array.new(8) { |i| Pawn.new([6, i], :white, self) }
-
+    populate_home_rows!(new_grid, :black)
+    populate_home_rows!(new_grid, :white)
+    new_grid[2..5].map!(Array.new(8) { NullPiece.instance })
     new_grid
   end
 
   def king_pos(color)
-    @grid.flatten.select { |piece| piece.is_a?(King) && piece.color == color }
-      .first.position
+    king = all_pieces(color).find { |piece| piece.is_a?(King) }
+    king.position
   end
 
   def all_pieces(color)

@@ -16,7 +16,7 @@ class Piece
     @position, @color, @board = position, color, board
   end
 
-  def change_position(pos)
+  def change_position!(pos)
     @position = pos
   end
 
