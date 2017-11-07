@@ -2,7 +2,6 @@ require 'set'
 require_relative 'piece'
 
 class Pawn < Piece
-  include SlidingPiece # for increment_pos method
 
   def inspect
     '♟'
@@ -11,11 +10,12 @@ class Pawn < Piece
   def moves
     moves = Set.new
     move = increment_pos(position, diff)
-    if board.valid_pos?(move)
+
+    if valid_pos?(move) && board.is_empty?(move)
       moves << move
       if at_start_row?
         move = increment_pos(move, diff)
-        moves << start_move if board.is_empty?(move)
+        moves << move if board.is_empty?(move)
       end
     end
     moves + attacks

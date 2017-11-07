@@ -20,6 +20,11 @@ class Piece
     @position = pos
   end
 
+
+    def increment_pos(pos, diff)
+      pos.map.with_index { |coord, idx| coord + diff[idx] }
+    end
+
   def valid_moves
     moves.reject { |move| move_into_check?(move) }
   end

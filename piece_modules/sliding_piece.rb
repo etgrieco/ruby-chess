@@ -17,8 +17,4 @@ module SlidingPiece
     moves
   end
 
-  def increment_pos(pos, diff)
-    pos.map { |coord, idx| coord + diff[idx] }
-  end
-
 end

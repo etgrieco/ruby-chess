@@ -2,6 +2,8 @@ require_relative 'pieces'
 
 class Board
 
+  attr_reader :grid
+
   def initialize(grid = nil)
     @grid = grid || new_game_grid
   end
@@ -25,9 +27,9 @@ class Board
     pos.none? { |coord| coord < 0 || coord > 7 }
   end
 
-  def checkmate?(color)
-    in_check?(color) &&
-      all_pieces(color).all? { |piece| piece.valid_moves.empty? }
+  def checkmate?(player_color)
+    in_check?(player_color) &&
+      all_pieces(player_color).all? { |piece| piece.valid_moves.empty? }
   end
 
   def in_check?(player_color)
@@ -74,8 +76,6 @@ class Board
 
   private
 
-  attr_reader :grid
-
   def populate_home_rows!(grid, color)
     row = color == :black ? 0 : 7
     pawn_row = color == :black ? 1 : 6
@@ -91,14 +91,16 @@ class Board
       Rook.new([row, 7], color, self)
     ]
 
-    grid[pawn_row] = Array.new(8) { |i| Pawn.new([6, i], :white, self) }
+    grid[pawn_row] = Array.new(8) { |i| Pawn.new([pawn_row, i], color, self) }
   end
 
   def new_game_grid
     new_grid = Array.new(8) { Array.new(8) }
     populate_home_rows!(new_grid, :black)
     populate_home_rows!(new_grid, :white)
-    new_grid[2..5].map!(Array.new(8) { NullPiece.instance })
+    new_grid[2..5] = new_grid[2..5].map do
+      Array.new(8) { NullPiece.instance }
+    end
     new_grid
   end
 

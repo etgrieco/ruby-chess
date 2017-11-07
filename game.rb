@@ -1,5 +1,7 @@
 require_relative 'board'
 require_relative 'display'
+require_relative 'player'
+require 'byebug'
 
 class Game
 
@@ -18,6 +20,7 @@ class Game
   end
 
   private
+  attr_reader :player1, :player2
 
   def over?
     @board.checkmate?(@current_player.color)
@@ -25,38 +28,6 @@ class Game
 
   def switch_player
     @current_player = @current_player == @player1 ? @player2 : @player1
-  end
-
-end
-
-class HumanPlayer
-
-  attr_reader :name, :color
-
-  def initialize(name, color)
-    @name = name
-    @color = color
-  end
-
-  def play_turn(board)
-    puts "Your turn, #{name} (#{color})!".colorize(color)
-    begin
-      start_pos = Display.new(board).get_input
-      raise MoveError.new("You cant' select an empty space.") if board[start_pos].is_a?(NullPiece)
-      raise MoveError.new("You can't choose the other player's pieces!") if board[start_pos].color != @color
-      raise MoveError.new("That piece can't move anywhere") if board[start_pos].valid_moves.empty?
-    rescue MoveError => error
-      puts error.message
-      retry
-    end
-
-    begin
-      end_pos = Display.new(board, start_pos, start_pos).get_input
-      board.move_piece(start_pos, end_pos)
-    rescue MoveError => error
-      puts error.message
-      retry
-    end
   end
 
 end
