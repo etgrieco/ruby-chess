@@ -9,7 +9,7 @@ class King < Piece
     '♚'
   end
 
-  def move_diffs
+  def diffs
     [[-1, -1], [-1, 0], [-1, 1], [0, -1],
     [0, 1], [1, -1], [1, 0], [1, 1]]
   end

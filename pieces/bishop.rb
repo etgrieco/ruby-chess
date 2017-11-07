@@ -9,7 +9,7 @@ class Bishop < Piece
     '♝'
   end
 
-  def dirs
+  def diffs
     DIAGNALS
   end
 

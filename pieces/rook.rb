@@ -9,7 +9,7 @@ class Rook < Piece
     '♜'
   end
 
-  def dirs
+  def diffs
     LATERALS
   end
 

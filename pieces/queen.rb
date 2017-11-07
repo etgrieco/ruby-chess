@@ -9,7 +9,7 @@ class Queen < Piece
     '♛'
   end
 
-  def dirs
+  def diffs
     DIAGNALS + LATERALS
   end
 

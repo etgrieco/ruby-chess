@@ -13,9 +13,7 @@ class Piece
   }
 
   def initialize(position, color, board)
-    @position = position
-    @color = color
-    @board = board
+    @position, @color, @board = position, color, board
   end
 
   def change_position(pos)
@@ -26,6 +24,15 @@ class Piece
     moves.reject { |move| move_into_check?(move) }
   end
 
+  # checks whether pos is included in a piece's valid moveset
+  def invalid_move?(pos)
+    !moves.include?(pos)
+  end
+
+  def valid_pos?(pos)
+    Board.in_bounds?(pos) && board.piece_color != color
+  end
+
   def move_into_check?(end_pos)
     check_board = @board.dup
     check_board.move_piece!(@position, end_pos)
@@ -34,14 +41,6 @@ class Piece
 
   def duplicate
     self.class.new(@position, @color, nil)
-  end
-
-  def is_empty?(pos)
-    self[pos].is_a?(NullPiece)
-  end
-
-  def is_occupied?(pos)
-    !is_empty(pos)
   end
 
   def to_s

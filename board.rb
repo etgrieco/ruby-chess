@@ -11,21 +11,21 @@ class Board
 
   def move_piece(start_pos, end_pos)
     piece = self[start_pos]
-    raise MoveError.new("That's not a valid chess move") unless piece.moves.include?(end_pos)
+    raise MoveError.new("There is no piece there") if piece.class == NullPiece
+    raise MoveError.new("That's not a valid chess move") if piece.invalid_move?(end_pos)
     raise MoveError.new("You can't move a piece into check") if piece.move_into_check?(end_pos)
     move_piece!(start_pos, end_pos)
   end
 
-  def move_piece!(start_pos, end_pos) # add valid_moves and raise errors
+  def move_piece!(start_pos, end_pos)
     piece = self[start_pos]
-    raise MoveError.new("There is no piece there") if piece.class == NullPiece
     self[start_pos] = NullPiece.instance
     self[end_pos] = piece
     piece.change_position(end_pos)
   end
 
   def self.in_bounds?(pos)
-    pos.none? { |coordinate| coordinate < 0 || coordinate > 7 }
+    pos.none? { |coord| coord < 0 || coord > 7 }
   end
 
   def checkmate?(color)
@@ -42,8 +42,11 @@ class Board
     other_pieces.each do |piece|
       return true if piece.moves.include?(king_pos(color))
     end
-
     false
+  end
+
+  def is_occupied?(pos)
+    !self[pos].is_a?(NullPiece)
   end
 
   def [](pos)
@@ -66,6 +69,10 @@ class Board
     new_board = Board.new(new_grid)
     new_board.grid.flatten.each { |piece| piece.board = new_board }
     new_board
+  end
+
+  def piece_color(pos)
+    self[pos].color
   end
 
   private
@@ -112,10 +119,6 @@ class Board
 
   def all_pieces(color)
     @grid.flatten.select { |piece| piece.color == color }
-  end
-
-  def piece_color(pos)
-    self[pos].color
   end
 
 end

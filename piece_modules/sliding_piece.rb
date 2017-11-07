@@ -1,25 +1,24 @@
+require 'set'
 module SlidingPiece
 
   DIAGNALS = [[-1, -1], [1, 1], [-1, 1], [1, -1]].freeze
   LATERALS = [[-1, 0], [1, 0], [0, 1], [0, -1]].freeze
 
   def moves
-    moves = []
+    moves = Set.new
     diffs.each do |diff|
-      until !Board.in_bounds?(pos) || board.piece_color(pos) == color
-        pos ||= diff
+      pos = increment_pos(position, diff)
+      while valid_pos?(pos)
         moves << pos
         break if board.is_occupied?(pos)
-        pos = diff.map { |diff_coord, idx| diff_coord + pos[idx] }
+        pos = increment_pos(pos, diff)
       end
     end
     moves
   end
 
-  def diffs
-    dirs.each do |diff|
-      diff.map { |axis_diff, idx| axis_diff + position[idx] }
-    end
+  def increment_pos(pos, diff)
+    pos.map { |coord, idx| coord + diff[idx] }
   end
 
 end

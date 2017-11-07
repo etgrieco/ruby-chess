@@ -10,6 +10,10 @@ class NullPiece < Piece
     self.class.instance
   end
 
+  def color
+    nil
+  end
+
   def inspect
     "□"
   end
