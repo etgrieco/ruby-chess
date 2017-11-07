@@ -9,8 +9,8 @@ class Rook < Piece
     '♜'
   end
 
-  def move_dirs
-    lateral_dirs
+  def dirs
+    LATERALS
   end
 
 end

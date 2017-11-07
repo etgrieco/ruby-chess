@@ -36,6 +36,13 @@ class Piece
     self.class.new(@position, @color, nil)
   end
 
+  def is_empty?(pos)
+    self[pos].is_a?(NullPiece)
+  end
+
+  def is_occupied?(pos)
+    !is_empty(pos)
+  end
 
   def to_s
     SYMBOLS[self.class.name.to_sym].colorize(self.color)

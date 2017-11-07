@@ -6,7 +6,7 @@ class Display
 
   attr_accessor :current_pos
 
-  def initialize(board, current_pos = [4,4], selected_pos = nil)
+  def initialize(board, current_pos = [4, 4], selected_pos = nil)
     @board = board
     @current_pos = current_pos
     @selected_pos = selected_pos
@@ -23,14 +23,12 @@ class Display
   end
 
   def render
-    count = 0
-
     @board.grid.each.with_index do |row, row_idx|
       print " "
       row.each.with_index do |piece, col_idx|
-        if [row_idx, col_idx] == @current_pos
+        if @current_pos == [row_idx, col_idx]
           print piece.to_s.colorize(:red)
-        elsif [row_idx, col_idx]  == @selected_pos
+        elsif @selected_pos == [row_idx, col_idx]
           print piece.to_s.colorize(:blue)
         else
           print piece

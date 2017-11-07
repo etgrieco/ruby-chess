@@ -8,10 +8,10 @@ class Pawn < Piece
 
   def moves
     possible_moves = []
-    forward_move = forward_dir[0] + @position[0], forward_dir[1] + @position[1]
-    if @board[forward_move].is_a?(NullPiece)
-      possible_moves << forward_move if Board.in_bounds?(forward_move)
+    forward_move = forward_dir.map { |dir, idx| dir + self.position[idx] }
 
+    if @board[forward_move].is_a?(NullPiece) && Board.in_bounds?(forward_move)
+      possible_moves << forward_move
       if at_start_row?
         vertical_move = @position[0] + (forward_steps * forward_dir[0])
         start_move = vertical_move, @position[1]
@@ -24,22 +24,20 @@ class Pawn < Piece
 
   private
 
-  def at_start_row?
-    if @color == :white && @position[0] == 6
-      true
-    elsif @color == :black && @position[0] == 1
-      true
-    else
-      false
-    end
-  end
-
   def forward_dir
     case @color
     when :black
-      [1,0]
+      [1, 0]
     when :white
-      [-1,0]
+      [-1, 0]
+    end
+  end
+
+  def at_start_row?
+    if @color == :white
+      @position[0] == 6
+    else
+      @position[0] == 1
     end
   end
 
@@ -50,9 +48,9 @@ class Pawn < Piece
   def side_attacks
     case @color
     when :black
-      [[1,-1], [1,1]]
+      [[1, -1], [1, 1]]
     when :white
-      [[-1,-1], [-1,1]]
+      [[-1, -1], [-1, 1]]
     end
   end
 

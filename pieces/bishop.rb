@@ -9,8 +9,8 @@ class Bishop < Piece
     '♝'
   end
 
-  def move_dirs
-    diagnal_dirs
+  def dirs
+    DIAGNALS
   end
 
 end

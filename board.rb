@@ -114,6 +114,10 @@ class Board
     @grid.flatten.select { |piece| piece.color == color }
   end
 
+  def piece_color(pos)
+    self[pos].color
+  end
+
 end
 
 class BoardErrors < StandardError
