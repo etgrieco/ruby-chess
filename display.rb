@@ -20,12 +20,23 @@ class Display
     current_pos
   end
 
-  def pos_highlight(pos)
+  def moves_positions
+    if @selected_pos
+      return board[@selected_pos].moves
+    end
+    []
+  end
+  
+  def pos_highlight(pos)    
     case pos
     when current_pos
       return :light_red
     when selected_pos
       return :light_blue
+    end
+    
+    if moves_positions.include?(pos)
+      return :light_green
     end
 
     if pos[0].even?

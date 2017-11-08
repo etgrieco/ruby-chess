@@ -45,7 +45,7 @@ class AIPlayer < Player
 
   def player_values(board, color)
     board.all_pieces(color).map do |piece|
-      key = piece.class.to_s.to_sym
+      key = piece.klass.to_sym
       PIECE_VALUES[key]
     end
   end

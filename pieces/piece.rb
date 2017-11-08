@@ -55,8 +55,15 @@ class Piece
   def to_s
     SYMBOLS[self.class.name.to_sym].colorize(COLORS[self.color])
   end
+  
+  def klass
+    self.class.to_s
+  end
 
   def inspect
     "p"
   end
+  
+  # SPECIAL MOVES PLACEHOLDERS
+  def can_castle?(arg); end
 end
