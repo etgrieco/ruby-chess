@@ -14,7 +14,7 @@ class AIPlayer < Player
 
   def play_turn(board)
     # best_move = get_best_move(board)
-    best_move = get_best_minimax_move(2, board)
+    best_move = get_best_minimax_move(3, board)
     board.move_piece(*best_move)
   end
 
@@ -27,25 +27,25 @@ class AIPlayer < Player
   def get_best_minimax_move(depth, board)
     best_move = { move: [nil, nil], points: -9999 }
 
-    moves = all_moves(board).map do |move|
-              { move: move, points: minimax(depth, board, color) }
-            end
-    moves.each do |move|
-      best_move = move[:points] > best_move[:points] ? move : best_move
+    all_moves(board).each do |test_move|
+      test_board = create_test_board(test_move, board)
+      points = minimax(depth, test_board, self.color)
+      if points > best_move[:points]
+        best_move = { move: test_move, points: points }
+      end
     end
 
     best_move[:move]
   end
 
-  def get_best_move(board)
+  def get_best_simple_move(board)
     best_move = { move: [nil, nil], points: -9999 }
 
     all_moves(board).each do |test_move|
       test_board = create_test_board(test_move, board)
       points = evaluate(test_board)
       if points > best_move[:points]
-        best_move[:move] = test_move
-        best_move[:points] = points
+        best_move = { move: test_move, points: points }
       end
     end
 
@@ -53,10 +53,10 @@ class AIPlayer < Player
   end
 
   def minimax(depth, board, maximizing_color)
-    opponent_color = color == :black ? :white : :black
+    opponent_color = maximizing_color == :black ? :white : :black
 
     if depth == 0
-      return -evaluate(board)
+      return evaluate(board)
     end
 
     all_moves = all_moves(board)
