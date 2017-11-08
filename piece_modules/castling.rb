@@ -1,5 +1,5 @@
 module Castling
-  
+
   def initialize(pos, color, board)
     super(pos, color, board)
     @has_moved = false
@@ -11,7 +11,7 @@ module Castling
   end
 
   private
-  
+
   attr_accessor :has_moved
-  
+
 end

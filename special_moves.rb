@@ -1,21 +1,19 @@
-require 'byebug'
-
 module SpecialMoves
 
-  def special_move?(start_pos, end_pos)
-    castling?(start_pos, end_pos)
+  def special_move?(start_piece, end_piece)
+    castling?(start_piece, end_piece)
   end
 
-  def castling?(start_pos, end_pos)
-    start_piece, end_piece = self[start_pos], self[end_pos]
+  def castling?(start_piece, end_piece)
     row = start_piece.position[0]
 
     if initial_castling_conditions_met?(start_piece, end_piece)
       king = start_piece.position[1] === 4 ? start_piece : end_piece
       rook = king == start_piece ? end_piece : start_piece
-      position_difference = king.position[1] - rook.position[1]
 
+      position_difference = king.position[1] - rook.position[1]
       check_range = position_difference == 4 ? (1..3) : (5..6)
+
       positions = check_range.to_a.map { |col| [row, col] }
 
       if all_null?(positions) && none_in_check?(king, positions)

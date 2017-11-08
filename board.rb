@@ -11,12 +11,16 @@ class Board
   end
 
   def move_piece(start_pos, end_pos)
-    piece = self[start_pos]
-    if special_move?(start_pos, end_pos) # performs move if available
+    start_piece, end_piece = self[start_pos], self[end_pos]
+    if special_move?(start_piece, end_piece) # performs move if available
     else
-      raise MoveError.new("There is no piece there") if piece.class == NullPiece
-      raise MoveError.new("That's not a valid chess move") if piece.invalid_move?(end_pos) # excludes special moves
-      raise MoveError.new("You can't place your own king into check") if piece.move_into_check?(end_pos) # excludes special moves
+      if start_piece.class == NullPiece
+        raise MoveError.new("There is no piece there")
+      elsif start_piece.invalid_move?(end_pos) # excludes special moves
+        raise MoveError.new("That's not a valid chess move")
+      elsif start_piece.move_into_check?(end_pos) # excludes special moves
+        raise MoveError.new("You can't place your own king into check")
+      end
       move_piece!(start_pos, end_pos)
     end
   end
