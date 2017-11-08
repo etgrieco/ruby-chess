@@ -23,4 +23,4 @@ The interface includes error-messages for invalid moves, including moves that pl
 - [ ] Promotion
 
 `Advanced Win/Loss Conditions`
-* Stalemate
+- [ ] Stalemate
