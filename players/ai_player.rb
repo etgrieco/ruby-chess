@@ -13,7 +13,7 @@ class AIPlayer < Player
   }.freeze
 
   def play_turn(board)
-    best_move = get_best_move(board)
+    best_move = get_best_simple_move(board)
     board.move_piece(*best_move)
   end
 
