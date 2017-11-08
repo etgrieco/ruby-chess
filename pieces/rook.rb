@@ -4,6 +4,7 @@ require_relative '../board'
 
 class Rook < Piece
   include SlidingPiece
+  include Castling
 
   def inspect
     '♜'
