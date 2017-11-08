@@ -25,7 +25,7 @@ class AIPlayer < Player
   end
 
   def get_best_simple_move(board)
-    best_move = { move: [nil, nil], points: -9999 }
+    best_move = { move: nil, points: -9999 }
 
     all_moves(board).each do |test_move|
       test_board = create_test_board(test_move, board)
@@ -63,7 +63,7 @@ class AIPlayer < Player
 
 
   def get_best_minimax_move(depth, board)
-    best_move = { move: [nil, nil], points: -9999 }
+    best_move = { move: nil, points: -9999 }
 
     all_moves(board).each do |test_move|
       test_board = create_test_board(test_move, board)
