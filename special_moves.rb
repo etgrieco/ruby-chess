@@ -32,8 +32,9 @@ module SpecialMoves
   end
 
   def initial_castling_conditions_met?(start_piece, end_piece)
-    start_piece.class.to_s == "King" && end_piece.class.to_s == "Rook"    ||
-      start_piece.class.to_s == "Rook" && end_piece.class.to_s == "King"  &&
+    debugger
+    (start_piece.class.to_s == "King" && end_piece.class.to_s == "Rook"    ||
+      start_piece.class.to_s == "Rook" && end_piece.class.to_s == "King")  &&
       !start_piece.has_moved? && !end_piece.has_moved?
   end
 

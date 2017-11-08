@@ -7,6 +7,10 @@ module Castling
 
   def has_moved?
     status = !!has_moved
+  end
+  
+  def change_position!(pos)
+    super(pos)
     @has_moved = true
   end
 
