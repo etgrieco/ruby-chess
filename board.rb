@@ -1,6 +1,8 @@
 require_relative 'pieces'
+require_relative 'special_moves'
 
 class Board
+  include 
 
   attr_reader :grid
 
@@ -10,9 +12,12 @@ class Board
 
   def move_piece(start_pos, end_pos)
     piece = self[start_pos]
-    raise MoveError.new("There is no piece there") if piece.class == NullPiece
-    raise MoveError.new("That's not a valid chess move") if piece.invalid_move?(end_pos)
-    raise MoveError.new("You can't place your own king into check") if piece.move_into_check?(end_pos)
+    if special_move?(start_pos, end_pos)
+    else
+      raise MoveError.new("There is no piece there") if piece.class == NullPiece
+      raise MoveError.new("That's not a valid chess move") if piece.invalid_move?(end_pos) # excludes special moves
+      raise MoveError.new("You can't place your own king into check") if piece.move_into_check?(end_pos) # excludes special moves
+    end
     move_piece!(start_pos, end_pos)
   end
 
