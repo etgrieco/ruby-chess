@@ -1,3 +1,6 @@
+require_relative 'piece_modules/castling'
+
+include Castling
 module SpecialMoves
 
   def special_move?(start_piece, end_piece)
@@ -10,8 +13,9 @@ module SpecialMoves
   def perform_castle(king, rook)
     self[king.position] = rook
     self[rook.position] = king
-    king.change_position!(rook.position)
-    rook.change_position!(king.position)
+    king_pos, rook_pos = king.position, rook.position
+    king.change_position!(rook_pos)
+    rook.change_position!(king_pos)
   end
 
 end

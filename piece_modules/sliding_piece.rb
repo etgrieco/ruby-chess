@@ -16,5 +16,5 @@ module SlidingPiece
     end
     moves
   end
-
+  
 end

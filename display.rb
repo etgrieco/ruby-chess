@@ -8,6 +8,7 @@ class Display
     @board = board
     @current_pos, @selected_pos = current_pos, selected_pos
     @messages = messages
+    get_moves_positions
   end
 
   def get_input
@@ -20,23 +21,24 @@ class Display
     current_pos
   end
 
-  def moves_positions
+  def get_moves_positions
     if @selected_pos
-      return board[@selected_pos].moves
+      @moves_positions = board[@selected_pos].moves
+    else
+      @moves_positions = []
     end
-    []
   end
-  
-  def pos_highlight(pos)    
+
+  def pos_highlight(pos)
     case pos
     when current_pos
       return :light_red
     when selected_pos
       return :light_blue
     end
-    
+
     if moves_positions.include?(pos)
-      return :light_green
+      return :cyan
     end
 
     if pos[0].even?
@@ -66,6 +68,5 @@ class Display
   private
 
   attr_accessor :current_pos
-  attr_reader :board, :selected_pos
-  attr_reader :messages
+  attr_reader :board, :selected_pos, :moves_positions, :messages
 end

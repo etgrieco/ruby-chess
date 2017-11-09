@@ -21,6 +21,15 @@ class Piece
     @position, @color, @board = position, color, board
   end
 
+  def method_missing(m, *args, &block)
+    piece_key = m.to_s.split("is_")[1][0...-1].capitalize
+    if SYMBOLS.keys.map(&:to_s).include?(piece_key)
+      return self.klass == piece_key
+    else
+      super
+    end
+  end
+
   def change_position!(pos)
     @position = pos
   end
@@ -55,7 +64,7 @@ class Piece
   def to_s
     SYMBOLS[self.class.name.to_sym].colorize(COLORS[self.color])
   end
-  
+
   def klass
     self.class.to_s
   end
@@ -63,7 +72,7 @@ class Piece
   def inspect
     "p"
   end
-  
+
   # SPECIAL MOVES PLACEHOLDERS
   def can_castle?(arg); end
 end
