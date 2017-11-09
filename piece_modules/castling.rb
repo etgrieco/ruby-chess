@@ -46,7 +46,8 @@ module Castling
   def initial_castling_conditions_met?(pieces)
     pieces.count(&:is_king?) == 1   &&
       pieces.count(&:is_rook?) == 1 &&
-      pieces.none?(&:has_moved?)
+      pieces.none?(&:has_moved?)    &&
+      !board.in_check?(color)
   end
 
   def castling_moves

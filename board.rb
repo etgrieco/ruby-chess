@@ -48,7 +48,7 @@ class Board
     return false unless king_pos
 
     opponent_color = player_color == :black ? :white : :black
-    other_pieces = all_pieces(opponent_color)
+    other_pieces = all_pieces(opponent_color).reject(&:is_king?)
 
     other_pieces.any? { |piece| piece.moves.include?(king_pos) }
   end

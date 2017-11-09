@@ -5,7 +5,7 @@ require_relative '../piece_modules/castling'
 
 class Rook < Piece
   include SlidingPiece
-  include Castling
+  # include Castling
 
   def inspect
     '♜'
