@@ -42,7 +42,11 @@ class Board
   end
 
   def in_check?(player_color)
-    king_pos = king_pos(player_color)
+    king_pos = all_pieces(player_color).find(&:is_king?)&.position
+
+    # castling exception: rook takes king out of board
+    return false unless king_pos
+
     opponent_color = player_color == :black ? :white : :black
     other_pieces = all_pieces(opponent_color)
 
@@ -115,11 +119,6 @@ class Board
       Array.new(8) { NullPiece.instance }
     end
     new_grid
-  end
-
-  def king_pos(color)
-    king = all_pieces(color).find { |piece| piece.is_a?(King) }
-    king.position
   end
 
 end
