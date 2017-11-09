@@ -12,14 +12,21 @@ The game follows the typical rules of chess, and plays until either player place
 
 ### Command-line Unicode 'graphical' interface
 
+
+
 While the entire program runs in the command line, the program was built with [Unicode chess symbols](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode). The [colorize](https://github.com/fazibear/colorize) Ruby gem is used to color the pieces and board for an easy user-interface. It is recommended that you zoom into your terminal interface if playing the game on a higher resolution (1080p+) monitor.
+
+![demo](https://github.com/etgrieco/ruby-chess/blob/master/docs/demo.gif?raw=true)
 
 The interface includes error-messages for invalid moves, including moves that place your king into check/checkmate!
 
 ### Todos
 `Special Moves`
-- [ ] En Passant Pawn Capture
 - [x] Castling
+
+![castling](https://github.com/etgrieco/ruby-chess/blob/master/docs/castling.gif?raw=true)
+
+- [ ] En Passant Pawn Capture
 - [ ] Pawn Promotion
 
 `Advanced Win/Loss Conditions`
