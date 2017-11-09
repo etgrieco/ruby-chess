@@ -18,9 +18,9 @@ The interface includes error-messages for invalid moves, including moves that pl
 
 ### Todos
 `Special Moves`
-* En Passant Pawn Capture
-* Castling
-* Promotion
+- [ ] En Passant Pawn Capture
+- [x] Castling
+- [ ] Pawn Promotion
 
 `Advanced Win/Loss Conditions`
-* Stalemate
+- [ ] Stalemate
