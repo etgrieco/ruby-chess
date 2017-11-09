@@ -1,5 +1,3 @@
-require 'byebug'
-
 module Castling
 
   def initialize(pos, color, board)
