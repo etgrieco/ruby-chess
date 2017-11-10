@@ -10,17 +10,26 @@ Clone/download the repository. Navigate to the repository's directory. Ensure th
 
 The game follows the typical rules of chess, and plays until either player places the other in checkmate. Use the arrow-keys (or WASD) to move the cursor, and space/enter to select a piece. Following the touch-move rule of chess, once a piece is selected, you must perform a legal move with that piece!
 
-## Features
+It is recommended that you zoom into your terminal interface (`COMMAND + "+"`) if playing the game on a higher resolution (1080p+) monitor.
+
+## Highlights
+
+### DRY Chess Code
+
+  
 
 ### Command-line Unicode 'graphical' interface
 
-While the entire program runs in the command line, the program was built with [Unicode chess symbols](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode). The [colorize](https://github.com/fazibear/colorize) Ruby gem is used to color the pieces and board for an easy user-interface. It is recommended that you zoom into your terminal interface if playing the game on a higher resolution (1080p+) monitor.
+While the entire program runs in the command line, the program was built with [Unicode chess symbols](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode). The [colorize](https://github.com/fazibear/colorize) Ruby gem is used to color the pieces and board for an easy user-interface.
 
 The interface includes moves-highlighting for a piece's available moves.
 
 ![demo](https://github.com/etgrieco/ruby-chess/blob/master/docs/demo.gif?raw=true)
 
 ### Todos
+`AI`
+- [ ] Simple player AI that can handle check scenarios
+
 `Special Moves`
 - [x] Castling
 
