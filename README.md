@@ -23,7 +23,9 @@ The interface includes error-messages for invalid moves, including moves that pl
 ### Todos
 `Special Moves`
 - [x] Castling
+
 ![castling demo](https://github.com/etgrieco/ruby-chess/blob/master/docs/castling-demo.gif?raw=true)
+
 - [ ] En Passant Pawn Capture
 - [ ] Pawn Promotion
 
