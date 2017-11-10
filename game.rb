@@ -1,7 +1,6 @@
 require_relative 'board'
 require_relative 'display'
 require_relative 'players/players'
-require 'byebug'
 
 class Game
 
@@ -35,5 +34,7 @@ class Game
 end
 
 if __FILE__ == $PROGRAM_NAME
+  player1 = HumanPlayer.new("Player 1", :white)
+  player2 = HumanPlayer.new("Player 2", :black)
   Game.new(player1, player2).play
 end
