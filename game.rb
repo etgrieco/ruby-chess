@@ -21,6 +21,7 @@ class Game
   end
 
   private
+  
   attr_reader :player1, :player2
 
   def over?
