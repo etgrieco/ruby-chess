@@ -66,7 +66,7 @@ class AIPlayer < Player
 
     all_moves(board).each do |test_move|
       test_board = create_test_board(test_move, board)
-      points = minimax(depth, test_board, self.color)
+      points = minimax(depth - 1, test_board, self.color)
       if points > best_move[:points]
         best_move = { move: test_move, points: points }
       end
