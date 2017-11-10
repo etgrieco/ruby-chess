@@ -35,23 +35,5 @@ class Game
 end
 
 if __FILE__ == $PROGRAM_NAME
-  player1 = HumanPlayer.new("Player 1", :white)
-  puts "1. Player vs. Player?"
-  puts "2. Player vs. AI?"
-  
-  begin
-    case gets.chomp
-    when "1"
-      player2 = HumanPlayer.new("Player 2", :black)
-    when "2"
-      player2 = AIPlayer.new("Player 2 (AI)", :black)
-    else
-      raise StandardError("Please choose a valid option")
-    end
-  rescue StandardError => error
-    puts error.message
-    retry
-  end
-  
   Game.new(player1, player2).play
 end
