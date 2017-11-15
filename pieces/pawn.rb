@@ -33,11 +33,7 @@ class Pawn < Piece
   end
 
   def at_start_row?
-    if @color == :white
-      @position[0] == 6
-    else
-      @position[0] == 1
-    end
+    @color == :white ? @position[0] == 6 : @position[0] == 1
   end
 
   def attack_diffs
