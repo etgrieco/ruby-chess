@@ -1,7 +1,7 @@
 require 'set'
 module SlidingPiece
 
-  DIAGNALS = [[-1, -1], [1, 1], [-1, 1], [1, -1]].freeze
+  DIAGONALS = [[-1, -1], [1, 1], [-1, 1], [1, -1]].freeze
   LATERALS = [[-1, 0], [1, 0], [0, 1], [0, -1]].freeze
 
   def moves

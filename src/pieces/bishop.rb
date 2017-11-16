@@ -10,7 +10,7 @@ class Bishop < Piece
   end
 
   def diffs
-    DIAGNALS
+    DIAGONALS
   end
 
 end

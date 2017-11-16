@@ -6,7 +6,7 @@ A chess game with a command-line interface.
 
 Requirements: Ruby version 2.3+.
 
-Clone/download the repository. Navigate to the repository's directory. Ensure the `colorize` gem is installed using [bundler](https://bundler.io/) (`bundle install`). Run the game with `ruby game.rb`.
+Clone/download the repository. Navigate to the repository's directory. Ensure the `colorize` gem is installed using [bundler](https://bundler.io/) (`bundle install`). Run the game with `ruby chess.rb`.
 
 The game follows the typical rules of chess, and plays until either player places the other in checkmate. Use the arrow-keys (or WASD) to move the cursor, and space/enter to select a piece. Following the touch-move rule of chess, once a piece is selected, you must perform a legal move with that piece!
 
@@ -16,7 +16,7 @@ It is recommended that you zoom into your terminal interface (`COMMAND + "+"`) i
 
 ### DRY Chess Code
 
-One of my personal acheivements with this project was maintaining a very DRY, readable, and succinct code-base for a game that has a quite complex moveset. Creative use of modules were employed to keep the number of piece-specific methods down to a bare-minimum. Pieces were divided into "stepping" and "sliding" categories, and modules were written to modify behaviors based on these properties. As a result, complex pieces such as Knight and Queen, can be implemented quite simply without repetitive code.
+One of my personal achievements with this project was maintaining a very DRY, readable, and succinct code-base for a game that has a quite complex move set. Creative use of modules were employed to keep the number of piece-specific methods down to a bare-minimum. Pieces were divided into "stepping" and "sliding" categories, and modules were written to modify behaviors based on these properties. As a result, complex pieces such as Knight and Queen, can be implemented quite simply without repetitive code.
 
 Stepping Pieces:
 
@@ -33,7 +33,7 @@ end
 
 class Knight < Piece
   include SteppingPiece
-  
+
   def diffs
     [[-1, -2], [-1, 2], [1, -2], [1, 2],
      [-2, -1], [2, -1], [-2, 1], [2, 1]]
@@ -46,7 +46,7 @@ Sliding Piece:
 ```Ruby
 module SlidingPiece
 
-  DIAGNALS = [[-1, -1], [1, 1], [-1, 1], [1, -1]].freeze
+  DIAGONALS = [[-1, -1], [1, 1], [-1, 1], [1, -1]].freeze
   LATERALS = [[-1, 0], [1, 0], [0, 1], [0, -1]].freeze
 
   def moves
@@ -67,7 +67,7 @@ class Queen < Piece
   include SlidingPiece
 
   def diffs
-    DIAGNALS + LATERALS
+    DIAGONALS + LATERALS
   end
 
 end
@@ -79,7 +79,7 @@ My other work also took advantage of Ruby's introspection features to keep the o
 ```Ruby
 class Piece
 #...
-   SYMBOLS = {
+  SYMBOLS = {
     King:   '♚', Queen:  '♛', Rook: '♜',
     Bishop: '♝', Knight: '♞', Pawn: '♟', NullPiece: ' '
   }.freeze

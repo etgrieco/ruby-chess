@@ -1,6 +1,5 @@
 require_relative 'board'
 require_relative 'display'
-require_relative 'players/players'
 
 class Game
 
@@ -21,7 +20,7 @@ class Game
   end
 
   private
-  
+
   attr_reader :player1, :player2
 
   def over?
@@ -32,10 +31,4 @@ class Game
     @current_player = @current_player == @player1 ? @player2 : @player1
   end
 
-end
-
-if __FILE__ == $PROGRAM_NAME
-  player1 = HumanPlayer.new("Player 1", :white)
-  player2 = HumanPlayer.new("Player 2", :black)
-  Game.new(player1, player2).play
 end

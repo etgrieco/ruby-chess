@@ -10,7 +10,7 @@ class Queen < Piece
   end
 
   def diffs
-    DIAGNALS + LATERALS
+    DIAGONALS + LATERALS
   end
 
 end
