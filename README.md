@@ -16,7 +16,7 @@ It is recommended that you zoom into your terminal interface (`COMMAND + "+"`) i
 
 ### DRY Chess Code
 
-One of my personal achievements with this project was maintaining a very DRY, readable, and succinct code-base for a game that has a quite complex move set. Creative use of modules were employed to keep the number of piece-specific methods down to a bare-minimum. Pieces were divided into "stepping" and "sliding" categories, and modules were written to modify behaviors based on these properties. As a result, complex pieces such as Knight and Queen, can be implemented quite simply without repetitive code.
+The project utilizes DRY, readable, and succinct code-base for a game that has a quite complex move set. Creative use of modules were employed to keep the number of piece-specific methods down to a bare-minimum. Pieces were divided into "stepping" and "sliding" categories, and modules were written to modify behaviors based on these properties. As a result, complex pieces such as Knight and Queen, can be implemented quite simply without repetitive code.
 
 Stepping Pieces:
 
@@ -74,7 +74,7 @@ end
 
 ```
 
-My other work also took advantage of Ruby's introspection features to keep the overall codebase as readable as possible. For example, an `is_{PIECE}` method missing method was built to easily look for specific pieces, especially when implementing special moves such as castling:
+This coding approach also takes advantage of Ruby's introspection features to keep the overall codebase as readable as possible. For example, an `is_{PIECE}` method missing method was built to easily look for specific pieces, especially when implementing special moves such as castling:
 
 ```Ruby
 class Piece
